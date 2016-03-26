@@ -1,0 +1,49 @@
+﻿<html>
+	<head>
+		<script src="/javascripts/lib/angular.js"></script>
+	</head>
+	<body>
+		<!--<div ng-app="" ng-init="mySwitch=true">	
+			<p>
+				<button ng-disabled="mySwitch">Click me!</button>
+				<button disabled>Oh no</button>
+			</p>
+			<p>
+				<input type="checkbox" ng-model="mySwitch"/>Button
+				{{mySwitch}}
+			</p>
+			<p ng-show="12>99">
+				show it!
+			</p>
+			<p ng-hide="false">
+				hide it!
+			</p>
+			<button ng-click="count=count+1" style="background-color">Button{{count}}</button>
+		</div>-->
+		<div	ng-app="ngApp" ng-controller="ngCtrl">
+			<button ng-click="toggle()">Display/Hide</button>
+			
+			<p ng-hide="myFlag">
+				First Name : <input type="text" ng-model="firstName"></input>
+				Last Name  : <input type="text" ng-model="lastName"></input>
+				Full Name  : {{firstName+' '+lastName}}
+			</p>
+			
+		</div>	
+		<script>
+			var app=angular.module("ngApp",[]);
+			app.controller("ngCtrl",function($scope){
+					$scope.firstName="Korbin";
+					$scope.lastName="Town";
+					$scope.toggle=function(){
+						$scope.myFlag=!$scope.myFlag;
+					}	
+			});	
+			app.directive("runoobDirective",function(){
+				return {
+					template:"lol"
+				}
+			});
+		</script>
+	</body>
+</html>

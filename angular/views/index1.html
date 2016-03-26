@@ -1,0 +1,47 @@
+﻿<html>
+	<head>
+		<script src="/javascripts/lib/angular.js"></script>
+	</head>
+	<body>
+		<div ng-app="ngApp" ng-controller="ngCtrl">
+			Welcome to angular {{version}} and url is {{url}} and http is:{{http}}
+			%% I'm coming after 2 seconds by  {{timeout}} {{interval}} @{{hexNumber}}
+			**{{arr}} <ul>
+							<li ng-repeat="x in arr">{{x | myFilter}}</li>			
+					  </ul>
+		</div>
+		<script>
+			var app=angular.module("ngApp",[]);
+			app.controller("ngCtrl",function($scope,$location,$http,$timeout,$interval,$hexFunction){
+				$scope.version=1;
+				$scope.url= $location.absUrl();
+				$http.get("/users").then(function(response){
+					$scope.http=response.data;
+				});
+				$timeout(function(){
+					$scope.timeout="Gentleman";
+				},2000);
+				$interval(function(){
+					$scope.interval=new Date().toString();
+				},1000);
+				
+				$scope.hexNumber=$hexFunction.hexF(267);
+				$scope.arr=[255,78,99];
+				
+			});
+			
+			app.service('$hexFunction',function(){
+				this.hexF=function(x){
+					return x.toString(16);
+				}			
+			});
+			
+			app.filter("myFilter",['$hexFunction',function($hexFunction){
+				return function(x){
+					return $hexFunction.hexF(x);
+				}	
+			}]);
+			
+		</script>
+	</body>
+</html>

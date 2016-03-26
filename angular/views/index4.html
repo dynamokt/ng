@@ -1,0 +1,41 @@
+﻿<html>
+	<head>
+		<script src="/javascripts/lib/angular.js"></script>
+		<style>
+			table, th, td{
+				border: 1px solid grey;
+				border:collapse: collapse;
+				padding: 5px;			
+			}
+			table tr:nth-child(odd){
+				background-color:#f1f1f1;
+			}
+			table tr:nth-child(even){
+				background-color:#ffffff;
+			}
+		</style>
+	</head>
+	<body>
+		<div ng-app="ngApp" ng-controller="ngCtrl">	
+			Welcome to angular{{version}}
+			<table>
+				<tr ng-repeat="x in names |orderBy:'Country'">
+				    <td>{{$index+1}}</td>
+					<td ng-if="$odd" style="background-color:green">{{x.Name}}</td>
+					<td ng-if="$even">{{x.Name}}</td>
+					<td ng-if="$odd" style="background-color:grey">{{x.Country|uppercase}}</td>
+					<td ng-if="$even">{{x.Country}}</td>
+				</tr>
+			</table>
+		</div>
+		<script>
+			var app=angular.module("ngApp",[]);
+			app.controller("ngCtrl",function($scope,$http){
+				$scope.version=1;
+				$http.get("http://localhost:3000/users").success(function(response){
+					$scope.names=response.records;
+				});
+			});		
+		</script>
+	</body>
+</html>

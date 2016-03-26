@@ -1,0 +1,60 @@
+﻿<html>
+	<head>
+		<script src="/javascripts/lib/angular.js"></script>
+		<script src="/javascripts/lib/jquery.js"></script>
+	</head>
+	<body>
+			<div ng-app="ngApp2" ng-controller="ngCtrl2" ng-style="myStyle">
+			 <div>{{version}}</div>
+			 
+			 <form novalidate>
+				Username: <input ng-model="userName" type="text"/>
+			    Password:<input ng-model="password" type="text"/>
+
+                 <div>
+				  <button role="button" ng-click="submitForm()">Submit</button>		
+                 </div>				  
+			 </form>		 
+			<div>
+			<div>
+				<select ng-model="selectedName" ng-options="x for x in names">
+				</select>
+			</div>
+			
+			<div id="countries">
+				<ul>
+					<li ng-repeat="x in countries">{{x}}</li>				
+				</ul>
+			</div>
+			
+			<div>
+			  {{response}}
+			</div>
+			
+			<script>
+				var app=angular.module("ngApp2",[]);
+				app.controller("ngCtrl2",function($scope,$http){
+					$scope.version=1;
+					$scope.page="index2.html";
+					$scope.names=['Korbin','James','Lebron'];
+					$scope.countries=['China','Japan','Korean'];
+					$scope.submitForm=function(){
+						var fData={'username':$scope.userName,'password':$scope.password};
+						$http({method:'post',url:'/welcome',params:fData}).success(function(response){
+							$scope.response=response.records;
+						}).error(function(){
+						    alert('error');
+						});					
+					};
+					
+					$scope.myStyle={
+						"background-color":"coral",
+						"text-align":"center"
+
+
+					};
+					
+				});
+			</script>
+	</body>	
+</html>
